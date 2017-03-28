@@ -1,0 +1,18 @@
+[package]
+authors = ["Jorge Aparicio <japaricious@gmail.com>"]
+name = "posit"
+version = "0.1.0"
+
+[dependencies]
+typenum = "1.7.0"
+
+[dependencies.cast]
+default-features = false
+version = "0.2.0"
+
+[dev-dependencies]
+approx = "0.1.1"
+quickcheck = "0.4.1"
+
+[features]
+const-fn = []
