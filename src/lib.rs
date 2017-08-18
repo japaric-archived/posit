@@ -662,7 +662,7 @@ macro_rules! posit {
                 bits |= if fraction_size > s_fs {
                     (s_f << (fraction_size - s_fs)) & !(1 << s_fs)
                 } else {
-                    (s_f >> (s_fs - fraction_size)) & !(1 << s_fs)
+                    (s_f >> (s_fs - fraction_size)) & !(1 << fraction_size)
                 };
 
                 let p = Posit { bits: bits, _marker: PhantomData };
