@@ -636,10 +636,11 @@ macro_rules! posit {
                 let regime_mask = (1 << regime_size) - 1;
 
                 let regime_bits = if regime < 0 {
+                    // A negative regime starts with zeros and ends with a 1.
                     1
                 } else {
-                    let bits_mask = Self::bits_mask();
-                    (bits_mask & (bits_mask << (regime + 1))) & regime_mask
+                    // A positive regime starts with ones and ends with a 0.
+                    (Self::bits_mask() << 1) & regime_mask
                 };
 
                 let exponent_size = cmp::min(nbits -
