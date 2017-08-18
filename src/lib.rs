@@ -533,12 +533,12 @@ macro_rules! posit {
                 let (s_sign, mut s_f, mut s_e, s_fs) = if lhs_e == rhs_e {
                     let (lhs, rhs, fs) = if lhs_fs > rhs_fs {
                         let lhs = lhs_f;
-                        let rhs = (rhs_f << (lhs_fs - rhs_fs)) >> (lhs_e - rhs_e);
+                        let rhs = rhs_f << (lhs_fs - rhs_fs);
 
                         (lhs, rhs, lhs_fs)
                     } else {
                         let lhs = lhs_f << (rhs_fs - lhs_fs);
-                        let rhs = rhs_f >> (lhs_e - rhs_e);
+                        let rhs = rhs_f;
 
                         (lhs, rhs, rhs_fs)
                     };
