@@ -533,12 +533,12 @@ macro_rules! posit {
                 let (s_sign, mut s_f, mut s_e, s_fs) = if lhs_e == rhs_e {
                     let (lhs, rhs, fs) = if lhs_fs > rhs_fs {
                         let lhs = lhs_f;
-                        let rhs = (rhs_f << (lhs_fs - rhs_fs)) >> (lhs_e - rhs_e);
+                        let rhs = rhs_f << (lhs_fs - rhs_fs);
 
                         (lhs, rhs, lhs_fs)
                     } else {
                         let lhs = lhs_f << (rhs_fs - lhs_fs);
-                        let rhs = rhs_f >> (lhs_e - rhs_e);
+                        let rhs = rhs_f;
 
                         (lhs, rhs, rhs_fs)
                     };
@@ -636,10 +636,11 @@ macro_rules! posit {
                 let regime_mask = (1 << regime_size) - 1;
 
                 let regime_bits = if regime < 0 {
+                    // A negative regime starts with zeros and ends with a 1.
                     1
                 } else {
-                    let bits_mask = Self::bits_mask();
-                    (bits_mask & (bits_mask << (regime + 1))) & regime_mask
+                    // A positive regime starts with ones and ends with a 0.
+                    (Self::bits_mask() << 1) & regime_mask
                 };
 
                 let exponent_size = cmp::min(nbits -
@@ -661,7 +662,7 @@ macro_rules! posit {
                 bits |= if fraction_size > s_fs {
                     (s_f << (fraction_size - s_fs)) & !(1 << s_fs)
                 } else {
-                    (s_f >> (s_fs - fraction_size)) & !(1 << s_fs)
+                    (s_f >> (s_fs - fraction_size)) & !(1 << fraction_size)
                 };
 
                 let p = Posit { bits: bits, _marker: PhantomData };
