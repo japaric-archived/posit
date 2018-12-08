@@ -1,3 +1,9 @@
+# Status
+
+This crate is **UNMAINTAINED**. You may be interested in looking at https://gitlab.com/burrbull/softposit-rs.
+
+-- @japaric, 2018-12-08
+
 # `posit`
 
 > A Rust implementation of the [posit] number system
